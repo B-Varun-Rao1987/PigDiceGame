@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PIG DICE GAME</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js" defer></script>
+    <script src="script.js" defer></script>
+</head>
+
+<body>
+    <header>
+        <div class="ruleBoxIcon addBoxIconAnimate"></div>
+        <div class="acRuleBox">
+            <h2>--RULES--</h2>
+            <p><span class="crossBtn">✕</span>
+            <ul class="ruleList">
+                <li>◘
+                    There will be two players in this game. At the start of the game Player 1 will be the CurrentPlayer
+                    and Player 2 will be the in-active one.
+                </li>
+                <li>◘
+                    <span class="undL">Roll the dice</span>
+                    <ul>
+                        <li>➩The current player has to roll the dice and then a random number will be generated.</li>
+                        <li>➩If current player gets any number other than 1 on the dice then that number will be added
+                            to
+                            the current score (initially the current score will be 0) and then the new score will be
+                            displayed under Current Score section.</li>
+                        <li>➩If the current player gets 1 on the dice then the players will be switched i.e. the current
+                            player will become in-active and vice-versa.</li>
+                    </ul>
+                </li>
+                <li>◘
+                    <span class="undL">Hold</span>
+                    <ul>
+                        <li>➩If the current player clicks on HOLD, then the Current Score will be added to the Total
+                            Score.</li>
+                        <li>➩If the Total Score >= 100 then the current player wins else the players are switched.</li>
+                    </ul>
+                </li>
+                <li>◘
+                    <span class="undL">Reset</span>
+                    <ul>
+                        <li>➩All the scores are set to 0 and Player 1 is set as the starting player (current player).
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            </p>
+        </div>
+    </header>
+    <div class="container">
+        <div class="box">
+            <h2>Player 1</h2>
+            <div class="tScore">
+                <div class="tScoreHead">Total Score</div>
+                <p>0</p>
+            </div>
+            <div class="cScore">
+                <div class="cScoreHead">Current Score</div>
+                <p>0</p>
+            </div>
+            <div class="quitBtn">
+                <button class="ply1">Wanna Skip??</button>
+            </div>
+        </div>
+        <div class="box">
+            <h2>Roll the Dice!!</h2>
+            <div class="images">
+                <img src="#" class="dice1" alt="btnImage">
+                <img src="#" class="dice2" alt="btnImage">
+            </div>
+            <div class="btns">
+                <button class="hold">HOLD!</button>
+                <button class="roll">ROLL!</button>
+            </div>
+        </div>
+        <div class="box">
+            <h2>Player 2</h2>
+            <div class="tScore">
+                <div class="tScoreHead">Total Score</div>
+                <p>0</p>
+            </div>
+            <div class="cScore">
+                <div class="cScoreHead">Current Score</div>
+                <p>0</p>
+            </div>
+            <div class="quitBtn">
+                <button class="ply2">Wanna Skip??</button>
+            </div>
+        </div>
+    </div>
+    <div class="comment">
+        <p>helloo!!</p>
+    </div>
+
+</body>
+
+</html>
