@@ -9,15 +9,174 @@
 (function(){
     "use strict";
 
-    //Rule Box Animation---
 
-    $('.fadeoutbox').click(function(){
-        $('#box').fadeOut('normal');
+    //About JS :-
+
+    const elts = {
+        text1: document.getElementById("text1"),
+        text2: document.getElementById("text2")
+    };
     
-    });
-    $('.fadeinbox').click(function(){
-        $('#box').fadeIn('2000','swing');
-    });
+    const texts = [
+        "If",
+        "You",
+        "Like",
+        "It",
+        "Please",
+        "Give",
+        "a Love",
+        ":)",
+        "by @Varun"
+    ];
+    const textLen=texts.length;;
+    
+    const morphTime = 1;
+    const cooldownTime = 0.25;
+    
+    let textIndex = texts.length - 1;
+    let time = new Date();
+    let morph = 0;
+    let cooldown = cooldownTime;
+    let counter=0;
+    
+    elts.text1.textContent = texts[textIndex % texts.length];
+    elts.text2.textContent = texts[(textIndex + 1) % texts.length];
+    
+    function doMorph() {
+        morph -= cooldown;
+        cooldown = 0;
+        counter++;
+        let fraction = morph / morphTime;
+    
+        if (fraction > 1) {
+            cooldown = cooldownTime;
+            fraction = 1;
+        }
+    
+        setMorph(fraction);
+    }
+    
+    function setMorph(fraction) {
+        elts.text2.style.filter = `blur(${Math.min(8 / fraction - 8, 100)}px)`;
+        elts.text2.style.opacity = `${Math.pow(fraction, 0.4) * 100}%`;
+    
+        fraction = 1 - fraction;
+        elts.text1.style.filter = `blur(${Math.min(8 / fraction - 8, 100)}px)`;
+        elts.text1.style.opacity = `${Math.pow(fraction, 0.4) * 100}%`;
+    
+        elts.text1.textContent = texts[textIndex % texts.length];
+        elts.text2.textContent = texts[(textIndex + 1) % texts.length];
+    }
+    
+    function doCooldown() {
+        morph = 0;
+        counter++;
+        elts.text2.style.filter = "";
+        elts.text2.style.opacity = "100%";
+    
+        elts.text1.style.filter = "";
+        elts.text1.style.opacity = "0%";
+    }
+    
+
+    function animate() {
+        requestAnimationFrame(animate);
+        let newTime = new Date();
+        let shouldIncrementIndex = cooldown > 0;
+        let dt = (newTime - time) / 1000;
+        time = newTime;
+        // if(counter===texts.length)
+        //     document.querySelector('#about').style.display="none";
+        cooldown -= dt;
+        
+        if (cooldown <= 0) {
+            if (shouldIncrementIndex) {
+                textIndex++;
+            }
+    
+            doMorph();
+        } else {
+            doCooldown();
+        }
+    }
+    
+    animate();
+
+    setTimeout(function(){
+        let about=document.querySelector("#about");
+        about.innerHTML="";
+        about.display="none";
+    },11000);
+
+    //Confetti JS :-
+
+    const canvasEl = document.querySelector('#canvas');
+
+    const w = canvasEl.width = window.innerWidth;
+    const h = canvasEl.height = window.innerHeight * 2;
+
+    function loop() {
+    requestAnimationFrame(loop);
+    ctx.clearRect(0,0,w,h);
+    
+    confs.forEach((conf) => {
+        conf.update();
+        conf.draw();
+        })
+    }
+
+    function Confetti () {
+    //construct confetti
+    const colours = ['#fde132', '#009bde', '#ff6b00'];
+    
+    this.x = Math.round(Math.random() * w);
+    this.y = Math.round(Math.random() * h)-(h/2);
+    this.rotation = Math.random()*360;
+
+    const size = Math.random()*(w/60);
+    this.size = size < 15 ? 15 : size;
+
+    this.color = colours[Math.floor(colours.length * Math.random())];
+
+    this.speed = this.size/7;
+    
+    this.opacity = Math.random();
+
+    this.shiftDirection = Math.random() > 0.5 ? 1 : -1;
+    }
+
+    Confetti.prototype.border = function() {
+    if (this.y >= h) {
+        this.y = h;
+    }
+    }
+
+    Confetti.prototype.update = function() {
+    this.y += this.speed;
+    
+    if (this.y <= h) {
+        this.x += this.shiftDirection/3;
+        this.rotation += this.shiftDirection*this.speed/100;
+    }
+
+    if (this.y > h) this.border();
+    };
+
+    Confetti.prototype.draw = function() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, this.rotation, this.rotation+(Math.PI/2));
+        ctx.lineTo(this.x, this.y);
+        ctx.closePath();
+        ctx.globalAlpha = this.opacity;
+        ctx.fillStyle = this.color;
+        ctx.fill();
+      };
+      
+      const ctx = canvasEl.getContext('2d');
+      const confNum = Math.floor(w / 4);
+      const confs = new Array(confNum).fill().map(_ => new Confetti());
+
+    //Rule Box Animation---
     
     $('.acRuleBox').hide();
     
@@ -44,7 +203,7 @@
 
     console.log(cScoreUser2);
 
-    
+
     const rollBtn=document.querySelector('.btns .roll');
     const holdBtn=document.querySelector('.btns .hold');
 
@@ -124,6 +283,7 @@
         currScoreUser2=0;
         totScoreUser1=0;
         totScoreUser2=0;
+        canvasEl.style.display="none";
         playGame();
     }
 
@@ -167,13 +327,17 @@
                         tScoreUser2.innerHTML=`${totScoreUser2}`;
                     }
                     if(totScoreUser1>=100 || totScoreUser2>=100){
+                        canvasEl.style.display="block";
+                        loop();
+
                         if(totScoreUser1>=100){
                             comment.innerHTML="Player 1 Wins !!";
                         }
                         else if(totScoreUser2>=100){
                             comment.innerHTML="Player 2 Wins !!";
                         }
-                        comment.innerHTML+='\nEnter a key to restart!';
+                        comment.innerHTML+='\nEnter a key or refresh to restart !';
+                        // comment.style.fontSize="20px";
                         window.addEventListener('keypress',resetGame);
                     }
                 }
