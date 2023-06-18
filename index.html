@@ -7,11 +7,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PIG DICE GAME</title>
     <link rel="stylesheet" href="style.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js" defer></script>
-    <script src="script.js" defer></script>
 </head>
 
 <body>
+    <canvas id="canvas"></canvas>
+    <div id="about">
+        <div id="container">
+            <span id="text1"></span>
+            <span id="text2"></span>
+        </div>
+
+        <svg id="filters">
+            <defs>
+                <filter id="threshold">
+                    <feColorMatrix in="SourceGraphic" type="matrix" values="1 0 0 0 0
+                      0 1 0 0 0
+                      0 0 1 0 0
+                      0 0 0 255 -140" />
+                </filter>
+            </defs>
+        </svg>
+    </div>
+    <div class="gameHead">
+        <h2 class="title">
+            <span class="title-word title-word-1">Pig</span>
+            <span class="title-word title-word-2">Dice</span>
+            <span class="title-word title-word-3">Game</span>
+        </h2>
+    </div>
     <header>
         <div class="ruleBoxIcon addBoxIconAnimate"></div>
         <div class="acRuleBox">
@@ -97,7 +120,11 @@
     <div class="comment">
         <p>helloo!!</p>
     </div>
-
+    <div class="footer cp-text">
+        By - B Varun Rao ©
+    </div>
+    <script src="jquery-3.7.0.min.js"></script>
+    <script src="script.js"></script>
 </body>
 
 </html>
