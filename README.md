@@ -15,3 +15,5 @@ How to Play:
 Rules are specified in the game itself to understand the UI.
 
 Have fun playing the Pig Dice game and may the dice be in your favor!
+
+The URL to the game is : 'https://pig-dice-game-varun-rao-888.netlify.app/'
